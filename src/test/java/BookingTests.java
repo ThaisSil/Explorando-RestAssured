@@ -11,6 +11,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -106,7 +107,7 @@ public class BookingTests {
 
     }
 
-    @Test
+    @Test // Get Booking Total Price
 
     public void getAllBookingsByTotalPrice() {
         request
@@ -119,6 +120,41 @@ public class BookingTests {
                 .contentType(ContentType.JSON)
                 .and()
                 .body("results", hasSize(greaterThan(0)));
+    }
+
+    @Test // Create Booking
+    public void CreateBooking_WithValidData_returnOk() {
+
+        Booking test = booking;
+        request
+                .when()
+                .body(booking)
+                .post("/booking")
+                .then()
+                .body(matchesJsonSchemaInClasspath("createBookingRequestSchema.json"))
+                .and()
+                .assertThat()
+                .statusCode(200)
+                .contentType(ContentType.JSON).and().time(lessThan(2000L));
+
+
+    }
+//org.opentest4j.AssertionFailedError: expected: <201> but was: <403>
+    @Test // Delete Booking
+    public void DeleteBooking() {
+
+        Response response =
+
+                request
+                        .header("Cookie", "token=1e618f0834565bf")
+                        .when()
+                        .delete("/booking/" + faker.number().digits(3))
+                        .then()
+                        .extract()
+                        .response();
+
+        Assertions.assertNotNull(response);
+        Assertions.assertEquals(201, response.statusCode());
     }
 }
 
