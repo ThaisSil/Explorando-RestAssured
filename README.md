@@ -20,7 +20,7 @@ A API usada como base foi: https://restful-booker.herokuapp.com/
 
 :heavy_check_mark: Fazer uma suíte de testes cobrindo todos os endpoints da documentação.
 
-:heavy_check_mark: Gerar report usando o *Allure Framewor*.
+:heavy_check_mark: Gerar report usando o *Allure Framework*.
 
 :heavy_check_mark: Subir o projeto para o repositório.
 
